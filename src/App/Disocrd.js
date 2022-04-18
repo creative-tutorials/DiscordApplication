@@ -1,4 +1,4 @@
-import robotImage from './image/robot.png';
+import robotImage from '../image/robot.png';
 import './Discord.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faCog, faMessage, faHashtag, faAtom, faPaperPlane, faCheck } from '@fortawesome/free-solid-svg-icons';
