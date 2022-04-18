@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import googleImage from "./image/google-brands.svg";
-import Discord from './Disocrd';
+import Discord from './App/Disocrd';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
