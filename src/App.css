@@ -1,38 +1,60 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
-
-.App-link {
-  color: #61dafb;
+.wrapper {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  display: none;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.wrapper .content .img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper .content .img img{
+    width: 40%;
+}
+.wrapper .content .text{
+    font-size: 2em;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.wrapper .content p{
+    text-align: center;
+    font-weight: 500;
+}
+.wrapper .content .googleAuth{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper .content .googleAuth button{
+    width: 100%;
+    height: 65px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background: #344180;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper .content .googleAuth button img{
+    width: 20px;
+    margin-right: 5px;
+    filter: invert(1);
+}
+.wrapper.hide{
+    /* display: none; */
 }

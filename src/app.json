@@ -1,0 +1,27 @@
+[
+    {
+        "project": "Disocrd",
+        "version": "8.3.2",
+        "author": "Creative Tutorials",
+        "server_url": "http://localhost:3000/",
+        "description": "This is a demo project of the Discord App",
+        "category": "Communication",
+        "public": true,
+        "dependencies": [
+            {
+                "project": "Disocrd",
+                "version": "8.3.2",
+                "framework": [
+                    "react",
+                    "firebase"
+                ]
+            }
+        ],
+        "authentication": [
+            {
+                "auth": true,
+                "type": "Google Auth"
+        }
+    ]
+    }
+]
