@@ -62,11 +62,10 @@ const handleLogin = () => {
     });
 
 }
-const getData = () => {
+const getData = () => { //listening to the json file that holds data about the app like the name, version, etc
   let spices = import('./app.json')
   spices.then(data => {
     console.log(data)
-    // spices.then(let data = { set: "Hello", get: "World" })
   });
 }
 getData()
