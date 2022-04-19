@@ -40,7 +40,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     position: relative;
-    /* display: none; */
+    display: none;
 }
 .container .content .flex .flex_content{
     display: flex;
@@ -138,6 +138,15 @@
     font-weight: 500;
     margin-left: 5px;
 }
+.container .content .flex .flex_content .col-middle .body .body_content .msg .down{
+    display: flex;
+    margin-left: 5px;
+    user-select: none;
+}
+.container .content .flex .flex_content .col-middle .body .body_content .msg .down .person{
+    color: rgb(137, 137, 137);
+    font-weight: 500;
+}
 .container .content .flex .flex_content .col-middle .body .body_content .bottom{
     width: 100%;
     max-width: 540px;
@@ -185,5 +194,5 @@
     display: none;
 }
 .container.show{
-    /* display: block; */
+    display: block;
 }
