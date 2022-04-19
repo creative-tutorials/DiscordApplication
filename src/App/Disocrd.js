@@ -1,11 +1,11 @@
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, push, set, onValue } from 'firebase/database';
 import robotImage from '../image/robot.png';
 import './Discord.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faCog, faMessage, faHashtag, faAtom, faPaperPlane, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, push, set, onValue } from 'firebase/database';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -21,29 +21,38 @@ const firebaseConfig = {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  const db = getDatabase();
+  const db = getDatabase(); // get database instance
 
+//  this will be intialized later after sendMessage function Works Fine
+  let person = prompt("Please enter your name");
+  if(person == null){
+      person = "Guest";
+  }else if(person === ""){
+        person = "Guest";
+  }
 
 const Discord = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const gotoGeneral = (e) => {
+
+    const gotoGeneral = (e) => { // link to general channel
         localStorage.setItem("channels", JSON.stringify('channels'));
         sessionStorage.setItem('channel', JSON.stringify('channels'));        
     }
-    const gotoTestChannel1 = (e) => {
+    const gotoTestChannel1 = (e) => { // link to test channel
         console.log(e.target)
     }
+
     window.onload = () => {
         const cookieBox = document.querySelector('.cookieBox');
         if(document.cookie.includes("Cookie=DiscordWebApp")){ // if cookie is set
             console.log("Cookie Set")
-            setIsOpen(!isOpen + cookieBox.classList.remove('show'));
+            setIsOpen(!isOpen + cookieBox.classList.remove('show')); // hide cookie box
         }else{
             console.log("Cookie Not Set")
-            setIsOpen(!isOpen + cookieBox.classList.add('show'));
+            setIsOpen(!isOpen + cookieBox.classList.add('show')); // show cookie box
         }    
-        localStorage.setItem("message", null)
     }
+
     const AcceptCookie = () => { // function to accept cookie and set cookie
         const cookieBox = document.querySelector('.cookieBox');
         document.cookie = "Cookie=DiscordWebApp";
@@ -55,35 +64,51 @@ const Discord = () => {
         const message = mesageinput.value;
         const date = new Date();
         const time = date.getHours() + ":" + date.getMinutes();
-        const postListRef = ref(db, '/database/discord/messages');
-        const newPostRef = push(postListRef);
-        set(newPostRef, {
+
+        const postListRef = ref(db, '/database/discord/messages'); // reference to the realtime database
+        const newPostRef = push(postListRef); // create a new post
+        set(newPostRef, { // set reference item to be added to the realtime database
             // ...
-            message: `${message}`,
-            time: `${time}`,
+            message: `${message}`, //fetching message from input
+            time: `${time}`, //getting the time from local time system
+            person: `${person}`, //fetching person from input - prompt
         });
-        const dbRef = ref(db, '/database/discord/messages');
-        onValue(dbRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
+        const dbRef = ref(db, '/database/discord/messages'); // reference to the realtime database
+        onValue(dbRef, (snapshot) => { // on value change
+        snapshot.forEach((childSnapshot) => { // for each child
             const childKey = childSnapshot.key;
             const childData = childSnapshot.val().message;
-            console.log(childData);
+            const childTime = childSnapshot.val().time;
+            const childUser = childSnapshot.val().person;
+            console.log(childUser); // print the message
             // ...
-            const messageDialogue = document.createElement('div');
-            body.appendChild(messageDialogue);
+            const messageDialogue = document.createElement('div'); // create a new div
+            body.appendChild(messageDialogue); // append the div to the body
+           
+            // set innerHTML of the div that will be created and get all the data from the database
             messageDialogue.innerHTML = `<div class="body">
             <div class="body_content">
                 <div class="msg">
                     <div class="msg_text">
                         <p id='message_bot'>${childData}</span>.</p>
                     </div>
-                    <div class="status"><i class="fa-solid fa-check"></i> ${time}</div>
+                    <div class="down">
+                        <div class="person">${childUser}</div>
+                        <div class="status"><i class="fa-solid fa-check"></i> ${childTime}</div>
+                    </div>
                 </div>
             </div>
         </div>`
+
+        const scrollToBottom = () => { // function to scroll to bottom
+            const element = document.getElementById('body');
+            element.scrollTop = element.scrollHeight;
+        }
+        scrollToBottom();
+
         });
         }, {
-        onlyOnce: false
+        onlyOnce: false // set to false to listen to the realtime database
         });
     }
     return (
@@ -106,6 +131,7 @@ const Discord = () => {
                                         <p>Schedule</p>
                                     </div>
                                 </div>
+                                {/*  */}
                                 <div className="col_tab">
                                     <div className="icon">
                                     <FontAwesomeIcon icon={faCog} />
@@ -114,6 +140,7 @@ const Discord = () => {
                                         <p>Settings</p>
                                     </div>
                                 </div>
+                                {/*  */}
                                 <div className="col_tab">
                                     <div className="icon">
                                     <FontAwesomeIcon icon={faMessage} />
@@ -122,6 +149,7 @@ const Discord = () => {
                                         <p>Chat</p>
                                     </div>
                                 </div>
+                                {/*  */}
                                 <div className="col_tab">
                                     <div className="icon">
                                     <FontAwesomeIcon icon={faAtom} />
@@ -130,8 +158,11 @@ const Discord = () => {
                                         <p>Updates</p>
                                     </div>
                                 </div>
+                                {/*  */}
                             </div>
+                            {/* end of col_tabs div */}
                         </div>
+                        {/* end of col-left - col-right start */}
                         <div className="col-right">
                             <div className="SideName">Chat Server</div>
                             <div className="channels">
@@ -146,22 +177,30 @@ const Discord = () => {
                                        <p>Test Channel {1}</p>
                                     </div>
                                 </div>
+                                {/* end of channel div */}
                             </div>
                         </div>
+                        {/* end of col-right - col-middle start */}
                         <div className="col-middle">
                             <div className="header">
                                 <div className="headerName">{"Chat Server"}</div>
                             </div>
-                        <div className="body">
+                            {/* end of header div */}
+                        <div className="body" id='body'>
                             <div className="body_content">
                                 <div className="message_body">
                                     <div className="msg">
                                         <div className="msg_text">
                                             <p id='message_bot'>Hello, I'm a bot created by <span>@Kiran</span>.</p>
                                         </div>
-                                        <div className="status"><FontAwesomeIcon icon={faCheck} /> 2:00AM</div>
+                                        <div className="down">
+                                            <div className="person">User</div>
+                                            <div className="status"><FontAwesomeIcon icon={faCheck} /> 2:00AM</div>
+                                        </div>
                                     </div>
+                                    {/* end of msg div */}
                                 </div>
+                                {/* bottom Div - end of message_body div */}
                                 <div className="bottom">
                                     <div className="c8">
                                         <div className="messageInput">
@@ -173,13 +212,18 @@ const Discord = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* end of body-content div */}
                         </div>
+                        {/* end of body div */}
                         </div>
+                        {/* end of col-middle div */}
                     </div>
+                    {/* end of flex-content div */}
                 </div>
+                {/* end of flex-div */}
             </div>
         </div>
-        {/* cookie consent div */}
+        {/* cookie consent div - end of container div */}
         <div className="cookieBox">
             <div className="cookieBox_content">
                 <h2>Cookie Consent</h2>
