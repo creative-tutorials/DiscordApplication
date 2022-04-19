@@ -1,7 +1,7 @@
 [
     {
         "project": "Disocrd",
-        "version": "8.3.2",
+        "version": "6.0.1",
         "author": "Creative Tutorials",
         "server_url": "http://localhost:3000/",
         "description": "This is a demo project of the Discord App",
@@ -10,7 +10,7 @@
         "dependencies": [
             {
                 "project": "Disocrd",
-                "version": "8.3.2",
+                "version": "6.0.1",
                 "framework": [
                     "react",
                     "firebase"
